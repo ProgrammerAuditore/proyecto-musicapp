@@ -2,6 +2,7 @@ require('dotenv').config();
 const morgan = require('morgan');
 const express = require('express');
 const _conexion = require('./database');
+const indexRouter = require('./routes/index');
 const path = require('path');
 const app  = express();
 
@@ -16,6 +17,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(morgan('dev'));
 
 // * Routes
+
+app.use(indexRouter);
 
 // * Aplicación
 app.listen(app.get('port'), 
