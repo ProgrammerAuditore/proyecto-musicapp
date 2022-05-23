@@ -1,1 +1,8 @@
 <h1>Page View Cancion</h1>
+
+{{#with cancion}}
+    <input type="text" name="titulo" id="titulo" value="{{titulo}}" disabled>
+    <input type="text" name="grupo" id="grupo" value="{{grupo}}" disabled>
+    <input type="text" name="genero" id="genero" value="{{genero}}" disabled>
+    <input type="number" name="anho" id="anho" value="{{anho}}" disabled>
+{{/with}}

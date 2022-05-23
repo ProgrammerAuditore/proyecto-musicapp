@@ -1,0 +1,13 @@
+<h1>Page Lista Cancion</h1>
+
+<ul>
+    {{#each canciones}}
+    <li>
+        {{titulo}} - {{ _id }}
+        <form method="POST" action="/cancion/eliminar/{{_id}}?_method=DELETE">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Delete resource</button>
+        </form>
+    </li>
+    {{/each}}    
+</ul>

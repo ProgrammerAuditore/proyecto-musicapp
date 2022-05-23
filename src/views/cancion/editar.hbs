@@ -1,1 +1,12 @@
 <h1>Page Edit Cancion</h1>
+
+{{#with cancion}}
+<form action="/cancion/actualizar/{{_id}}?_method=PUT" method="POST">
+    <input type="hidden" name="_method" value="PUT" />
+    <input type="text" name="titulo" id="titulo" value="{{titulo}}">
+    <input type="text" name="grupo" id="grupo" value="{{grupo}}">
+    <input type="text" name="genero" id="genero" value="{{genero}}">
+    <input type="number" name="anho" id="anho" value="{{anho}}">
+    <input type="submit" value="Agregar">
+</form>
+{{/with}}

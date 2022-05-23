@@ -2,6 +2,7 @@ require('dotenv').config();
 const morgan = require('morgan');
 const express = require('express');
 const _conexion = require('./database');
+const methodOverride = require('method-override');
 const indexRouter = require('./routes/index.routes');
 const cancionRouter = require('./routes/cancion.routes');
 const exphbs = require("express-handlebars");
@@ -28,8 +29,10 @@ _conexion();
 
 // * Middleware
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(morgan('dev'));
+app.use(methodOverride('_method'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
 
 // * Routes
 app.use(indexRouter);
