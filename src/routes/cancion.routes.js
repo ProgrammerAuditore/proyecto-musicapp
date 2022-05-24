@@ -25,12 +25,12 @@ router.get("/cancion/agregar", (req, res) => {
 // * Agregar cancion en la DB (Backend)
 router.post("/cancion/registrar", async (req, res, next) => {
     try {
-        const { titulo, grupo, anho, genero } = req.body;    
-        const nuevo = new Cancion({
-            titulo, grupo, anho, genero
-        });
+        const { titulo, grupo, anho, genero } = req.body;   
+        const cancion =  { titulo, grupo, anho, genero }; 
+        const nuevo = new Cancion(cancion);
         await nuevo.save();
 
+        req.flash('msgsuccess','Canción se creó exitosamente.');
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
@@ -44,8 +44,10 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         const {_id} = req.params;
         const data = await Cancion.findById(_id).lean();
 
-        if(!data)
-        res.redirect("/");
+        if(!data){
+            req.flash('msginfo','Lo siento, canción sin existencia.');
+            res.redirect("/");
+        }
 
         res.render("cancion/editar", { cancion: data});
     } catch (error) {
@@ -59,13 +61,15 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
     try {
         const {_id} = req.params;
         const { titulo, grupo, anho, genero } = req.body;
-       const data = await Cancion.findByIdAndUpdate(_id, {
-            titulo, grupo, anho, genero 
-        });
+        const cancion =  { titulo, grupo, anho, genero };
+        const data = await Cancion.findByIdAndUpdate(_id, cancion);
 
-        if(!data)
-        res.redirect("/");
+        if(!data){
+            req.flash('msginfo','Lo siento, canción sin existencia.');
+            res.redirect("/");
+        }
 
+        req.flash('msgsuccess','La canción se actualizo exitosamente.');
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
@@ -79,8 +83,10 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         const {_id} = req.params;
         const data = await Cancion.findById(_id).lean();
 
-        if(!data)
-        res.redirect("/");
+        if(!data){
+            req.flash('msginfo','Lo siento, canción sin existencia.');
+            res.redirect("/");
+        }
 
         res.render("cancion/ver", { cancion: data});
     } catch (error) {
@@ -95,9 +101,12 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         const {_id} = req.params;
         const data = await Cancion.findByIdAndRemove(_id);
 
-        if(!data)
-        res.redirect("/");
+        if(!data){
+            req.flash('msginfo','Lo siento, canción sin existencia.');
+            res.redirect("/");
+        }
 
+        req.flash('msgsuccess','La canción se elimino exitosamente.');
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
