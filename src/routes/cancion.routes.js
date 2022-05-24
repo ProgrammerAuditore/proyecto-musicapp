@@ -8,6 +8,15 @@ router.get("/cancion/lista", async (req, res) => {
     res.render("cancion/lista", { canciones : data});
 });
 
+// * Buscar canciones
+router.get("/cancion/buscar", async (req, res) => {
+    const titulo = req.query.q;
+    const regexp = new RegExp(titulo, 'i');
+    const data = await Cancion.find({titulo:regexp}).lean();
+    res.render("cancion/lista", { canciones : data});
+});
+
+
 // * Agregar cancion (Frontend)
 router.get("/cancion/agregar", (req, res) => {
     res.render("cancion/agregar");
