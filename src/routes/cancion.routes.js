@@ -12,7 +12,7 @@ router.get("/cancion/lista", async (req, res) => {
 router.get("/cancion/buscar", async (req, res) => {
     const titulo = req.query.q;
     const regexp = new RegExp(titulo, 'i');
-    const data = await Cancion.find({titulo:regexp}).lean();
+    const data = await Cancion.find().or([{titulo:regexp}, {grupo:regexp}]).lean();
     res.render("cancion/lista", { canciones : data});
 });
 
