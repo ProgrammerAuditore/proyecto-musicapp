@@ -44,6 +44,9 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         const {_id} = req.params;
         const data = await Cancion.findById(_id).lean();
 
+        if(!data)
+        res.redirect("/");
+
         res.render("cancion/editar", { cancion: data});
     } catch (error) {
         next(error);
@@ -56,9 +59,12 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
     try {
         const {_id} = req.params;
         const { titulo, grupo, anho, genero } = req.body;
-        await Cancion.findByIdAndUpdate(_id, {
+       const data = await Cancion.findByIdAndUpdate(_id, {
             titulo, grupo, anho, genero 
         });
+
+        if(!data)
+        res.redirect("/");
 
         res.redirect("/cancion/lista");
     } catch (error) {
@@ -73,6 +79,9 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         const {_id} = req.params;
         const data = await Cancion.findById(_id).lean();
 
+        if(!data)
+        res.redirect("/");
+
         res.render("cancion/ver", { cancion: data});
     } catch (error) {
         next(error);
@@ -84,7 +93,10 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
 router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
     try {
         const {_id} = req.params;
-        await Cancion.findByIdAndRemove(_id);
+        const data = await Cancion.findByIdAndRemove(_id);
+
+        if(!data)
+        res.redirect("/");
 
         res.redirect("/cancion/lista");
     } catch (error) {
