@@ -1,13 +1,56 @@
-<h1>Page Lista Cancion</h1>
+<div class="alert alert-light" role="alert">
+  <h1 class="alert-heading">Mis canciones</h1>
+  <p>Lista de tus canciones favoritas</p>
+  <hr>
+</div>
 
 <ul>
-    {{#each canciones}}
-    <li>
-        {{titulo}} - {{ _id }}
-        <form method="POST" action="/cancion/eliminar/{{_id}}?_method=DELETE">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit">Delete resource</button>
-        </form>
-    </li>
-    {{/each}}    
+       
 </ul>
+
+<div class="row">
+  {{#each canciones}}
+  <div class="col-sm-6">
+    <div class="card mb-3" style="max-width: 640px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="https://audiobookseasy.com/wp-content/uploads/no-image.png" style="width: 100%; heigt: 100%;" alt="sin portada">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ titulo }}</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-between">
+          <div>
+          <a class="btn btn-primary btn-sm" style="font-size:0.7rem;" href="/cancion/ver/{{_id}}">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-warning btn-sm" style="font-size:0.7rem;" href="/cancion/editar/{{_id}}">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </a>
+          </div>
+          <div>
+          {{!-- Boton para eliminar una nota --}}
+              <form action="/cancion/eliminar/{{_id}}?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" />
+                <button
+                  type="submit"
+                  class="btn btn-danger btn-sm"
+                  style="font-size:0.7rem;"
+                >
+                  Eliminar
+                </button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    {{/each}} 
+  
+</div>

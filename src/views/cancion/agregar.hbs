@@ -1,9 +1,47 @@
-<h1>Page Add Cancion</h1>
+<div class="alert alert-light" role="alert">
+  <h1 class="alert-heading">Agregar cancion</h1>
+  <p>Agrega una cación a tu lista</p>
+  <hr>
+</div>
 
-<form action="/cancion/registrar" method="POST">
-    <input type="text" name="titulo" id="titulo" value="Ten la tuya">
-    <input type="text" name="grupo" id="grupo" value="Ckan">
-    <input type="text" name="genero" id="genero" value="Rap">
-    <input type="number" name="anho" id="anho" value="2007">
-    <input type="submit" value="Agregar">
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills">
+      {{!-- <li class="nav-item">
+        <a class="nav-link active" href="#">Active</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> --}}
+    </ul>
+  </div>
+  <div class="card-body">
+      <form action="/cancion/registrar" method="POST">
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Titulo</label>
+        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ej. Sigo Aqui" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="grupo" class="form-label">Grupo</label>
+        <input type="text" class="form-control" name="grupo" id="grupo" placeholder="Ej. Alex Ubago" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="genero" class="form-label">Genero</label>
+        <input type="text" class="form-control" name="genero" id="genero" placeholder="Ej. Pop">
+    </div>
+
+    <div class="mb-3">
+        <label for="anho" class="form-label">Año</label>
+        <input type="number" class="form-control" name="anho" id="anho" placeholder="Ej. 2002">
+    </div>
+    <input type="submit" class="btn btn-success" value="Agregar">
 </form>
+
+  </div>
+  </div>
+</div>
