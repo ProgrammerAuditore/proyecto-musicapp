@@ -6,19 +6,23 @@
 
 
 
-<div class="row">
+<div class="row d-flex justify-content-center">
   {{#each canciones}}
   <div class="col-sm-6">
     <div class="card mb-3" style="max-width: 640px;">
       <div class="row g-0">
-        <div class="col-md-4">
-          <img src="/assets/nopreview.jpg" style="width: 100%; height: 100%;" alt="sin portada">
-        </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="card-body">
-            <h5 class="card-title">{{ titulo }}</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <h5 class="card-title d-flex justify-content-between">
+              <span>{{titulo}}</span>
+              <span class="text-muted" >{{grupo}}</span>
+            </h5>
+            <hr>
+            <p class="card-text d-flex justify-content-between">
+              <span class="text-muted" >Genero: {{genero}}</span>
+              <span class="text-muted" >Año: {{anho}}</span>
+            </p>
+            <p class="card-text"><small class="text-muted" style="font-size: .6rem;" id="lista-creado-en">{{ createdAt }}</small></p>
           </div>
         </div>
         <div class="card-footer">
@@ -27,25 +31,25 @@
             <input type="hidden" name="_method" />
           </form>
           <div class="d-flex justify-content-between">
-            <div id="eliminar">
+              <div id="eliminar">
               </div>
               <div id="acciones">
-              <a class="btn btn-primary btn-sm text-white" style="font-size:0.7rem;" href="/cancion/ver/{{_id}}">
-                <i class="fa fa-eye" aria-hidden="true"></i>
-              </a>
-              <a class="btn btn-warning btn-sm text-white" style="font-size:0.7rem;" href="/cancion/editar/{{_id}}">
-                <i class="fa fa-edit" aria-hidden="true"></i>
-              </a>
-              <a
-                role="button"
-                type="submit" 
-                class="btn btn-danger btn-sm text-white" 
-                style="font-size:0.7rem;"
-                onclick="document.querySelector('#lista-eliminar-cancion').submit();"
-              >
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </a>
-            </div>
+                <a class="btn btn-primary btn-sm text-white" style="font-size:0.7rem;" href="/cancion/ver/{{_id}}">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-warning btn-sm text-white" style="font-size:0.7rem;" href="/cancion/editar/{{_id}}">
+                  <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+                <a
+                  role="button"
+                  type="submit" 
+                  class="btn btn-danger btn-sm text-white" 
+                  style="font-size:0.7rem;"
+                  onclick="document.querySelector('#lista-eliminar-cancion').submit();"
+                >
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+              </div>
           </div>
         </div>
       </div>
@@ -53,3 +57,13 @@
   </div>
   {{/each}} 
 </div>
+
+<script>
+    let createAt = document.querySelectorAll('#lista-creado-en');
+    createAt.forEach((el) => {
+      moment.locale('es');
+      const fechaDB = el.innerHTML;
+      const fechaMoment = moment(fechaDB).calendar();
+      el.innerHTML = "Agregado "+ fechaMoment;
+    });
+</script>
