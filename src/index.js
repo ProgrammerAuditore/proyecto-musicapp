@@ -38,6 +38,11 @@ app.use(express.urlencoded({ extended: false}));
 app.use(indexRouter);
 app.use(cancionRouter);
 
+// * Error 404
+app.use(function(req, res, next){
+    res.status(404).render('404');
+});
+
 // * Aplicación
 app.listen(app.get('port'), 
 () => console.log('Server on ', app.get('port')));
