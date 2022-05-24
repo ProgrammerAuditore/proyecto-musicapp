@@ -6,7 +6,7 @@
 
 
 
-<div class="row d-flex justify-content-center">
+<div class="row d-flex justify-content-start">
   {{#each canciones}}
   <div class="col-sm-6">
     <div class="card mb-3" style="max-width: 640px;">
@@ -27,7 +27,7 @@
         </div>
         <div class="card-footer">
           {{!-- Boton para eliminar una cancion --}}
-          <form action="/cancion/eliminar/{{_id}}?_method=DELETE" id="lista-eliminar-cancion" method="POST">
+          <form action="/cancion/eliminar/{{_id}}?_method=DELETE" id="btn-delete-{{_id}}" method="POST">
             <input type="hidden" name="_method" />
           </form>
           <div class="d-flex justify-content-between">
@@ -45,7 +45,7 @@
                   type="submit" 
                   class="btn btn-danger btn-sm text-white" 
                   style="font-size:0.7rem;"
-                  onclick="document.querySelector('#lista-eliminar-cancion').submit();"
+                  onclick="document.querySelector('#btn-delete-{{_id}}').submit();"
                 >
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>
