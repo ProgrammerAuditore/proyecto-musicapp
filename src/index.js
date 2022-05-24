@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const express = require('express');
 const _conexion = require('./database');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
+const session = require('express-session');
 const indexRouter = require('./routes/index.routes');
 const cancionRouter = require('./routes/cancion.routes');
 const exphbs = require("express-handlebars");
@@ -33,6 +35,19 @@ app.use(morgan('dev'));
 app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
+
+app.use(session({
+    secret: '/.phrase.secrent./',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
+app.use(function(req, res, next){
+    res.locals.msgsuccess = req.flash('msgsuccess');
+    res.locals.msginfo = req.flash('msginfo');
+    res.locals.msgdanger = req.flash('msgdanger');
+    next();
+   });
 
 // * Routes
 app.use(indexRouter);
