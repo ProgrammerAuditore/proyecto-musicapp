@@ -5,7 +5,10 @@ function _conexion(){
     const user = process.env.APP_DB_USER;
     const password = process.env.APP_DB_PASSWORD;
     const database = process.env.APP_DB_DATABASE;
-    const URI = `mongodb+srv://${user}:${password}@redesplus.guu0o.mongodb.net/${database}?retryWrites=true&w=majority`;
+    let URI = process.env.APP_DB_URI;
+    
+    if(!URI)
+    URI = `mongodb+srv://${user}:${password}@redesplus.guu0o.mongodb.net/${database}?retryWrites=true&w=majority`;
 
     conn.on('connected', (db) =>{
         console.log("conectado a : ", "host:",conn.host, "database:", conn.db.databaseName);
