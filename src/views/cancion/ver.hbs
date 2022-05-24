@@ -1,8 +1,111 @@
-<h1>Page View Cancion</h1>
+<div class="alert alert-light" role="alert">
+  <h1 class="alert-heading">Ver canción</h1>
+  <p>Aquí puedes ver la información de la canción</p>
+  <hr>
+</div>
 
 {{#with cancion}}
-    <input type="text" name="titulo" id="titulo" value="{{titulo}}" disabled>
-    <input type="text" name="grupo" id="grupo" value="{{grupo}}" disabled>
-    <input type="text" name="genero" id="genero" value="{{genero}}" disabled>
-    <input type="number" name="anho" id="anho" value="{{anho}}" disabled>
+<div class="card m-4">
+  <div class="card-header">
+    <ul class="nav nav-pills card-header-pills">
+      <li class="nav-item">
+        <a
+        class="btn btn-primary mx-2 text-white" 
+        href="/">Volver</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card-body">
+      <form action="#" id="form-editar-cancion">
+        <div class="mb-3">
+          <label for="titulo" class="form-label">Titulo</label>
+          <input
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Sigo Aqui" 
+          autocomplete="off"
+          name="titulo" 
+          id="titulo" 
+          readonly
+          disabled
+          required
+          value="{{titulo}}"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="grupo" class="form-label">Grupo</label>
+          <input 
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Alex Ubago" 
+          autocomplete="off"
+          name="grupo" 
+          id="grupo" 
+          readonly
+          disabled
+          required
+          value="{{grupo}}" 
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="genero" class="form-label">Genero</label>
+          <input 
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Pop" 
+          autocomplete="off"
+          name="genero" 
+          id="genero" 
+          readonly
+          disabled
+          required
+          value="{{genero}}" 
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="anho" class="form-label">Año</label>
+          <input 
+          type="number" 
+          class="form-control"
+          placeholder="Ej. 2002" 
+          autocomplete="off"
+          name="anho" 
+          id="anho" 
+          readonly
+          disabled
+          required
+          value="{{anho}}" 
+          />
+        </div>
+    </form>
+  </div>
+
+  <div class="card-footer">
+    {{!-- Boton para eliminar una cancion --}}
+    <form action="/cancion/eliminar/{{_id}}?_method=DELETE" id="ver-eliminar-cancion" method="POST">
+      <input type="hidden" name="_method" />
+    </form>
+    <ul class="nav nav-pills card-header-pills">
+      <li class="nav-item">
+        <a 
+        class="btn btn-warning mx-2 text-white"
+        href="/cancion/editar/{{_id}}">Editar</a>
+      </li>
+      <li>
+        <a
+          role="button"
+          type="submit" 
+          class="btn btn-danger mx-2 text-white"
+          onclick="document.querySelector('#ver-eliminar-cancion').submit();"
+        >
+          Eliminar
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
 {{/with}}

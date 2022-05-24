@@ -1,12 +1,79 @@
-<h1>Page Edit Cancion</h1>
+<div class="alert alert-light" role="alert">
+  <h1 class="alert-heading">Editar canción</h1>
+  <p>Aquí puedes modificar los datos de la canción</p>
+  <hr>
+</div>
 
 {{#with cancion}}
-<form action="/cancion/actualizar/{{_id}}?_method=PUT" method="POST">
-    <input type="hidden" name="_method" value="PUT" />
-    <input type="text" name="titulo" id="titulo" value="{{titulo}}">
-    <input type="text" name="grupo" id="grupo" value="{{grupo}}">
-    <input type="text" name="genero" id="genero" value="{{genero}}">
-    <input type="number" name="anho" id="anho" value="{{anho}}">
-    <input type="submit" value="Agregar">
-</form>
+<div class="card m-4">
+    <div class="card-header">
+      <ul class="nav nav-pills card-header-pills">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Volver</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <form action="/cancion/actualizar/{{_id}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" />
+                <div class="mb-3">
+          <label for="titulo" class="form-label">Titulo</label>
+          <input
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Sigo Aqui" 
+          autocomplete="off"
+          name="titulo" 
+          id="titulo" 
+          required
+          value="{{titulo}}"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="grupo" class="form-label">Grupo</label>
+          <input 
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Alex Ubago" 
+          autocomplete="off"
+          name="grupo" 
+          id="grupo" 
+          required
+          value="{{grupo}}" 
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="genero" class="form-label">Genero</label>
+          <input 
+          type="text" 
+          class="form-control"
+          placeholder="Ej. Pop" 
+          autocomplete="off"
+          name="genero" 
+          id="genero" 
+          required
+          value="{{genero}}" 
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="anho" class="form-label">Año</label>
+          <input 
+          type="number" 
+          class="form-control"
+          placeholder="Ej. 2002" 
+          autocomplete="off"
+          name="anho" 
+          id="anho" 
+          required
+          value="{{anho}}" 
+          />
+        </div>
+        <input type="submit" class="btn btn-warning text-white" value="Actualizar">
+      </form>
+    </div>
+  </div>
+</div>
 {{/with}}

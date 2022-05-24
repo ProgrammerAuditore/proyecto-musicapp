@@ -4,52 +4,52 @@
   <hr>
 </div>
 
-{{!-- Boton para eliminar una nota --}}
-<form action="/cancion/eliminar/{{_id}}?_method=DELETE" id="lista-eliminar-cancion" method="POST">
-  <input type="hidden" name="_method" />
-</form>
+
 
 <div class="row">
   {{#each canciones}}
   <div class="col-sm-6">
     <div class="card mb-3" style="max-width: 640px;">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="/assets/nopreview.jpg" style="width: 100%; height: 100%;" alt="sin portada">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ titulo }}</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="/assets/nopreview.jpg" style="width: 100%; height: 100%;" alt="sin portada">
         </div>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex justify-content-between">
-          <div id="eliminar">
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ titulo }}</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card-footer">
+          {{!-- Boton para eliminar una cancion --}}
+          <form action="/cancion/eliminar/{{_id}}?_method=DELETE" id="lista-eliminar-cancion" method="POST">
+            <input type="hidden" name="_method" />
+          </form>
+          <div class="d-flex justify-content-between">
+            <div id="eliminar">
+              </div>
+              <div id="acciones">
+              <a class="btn btn-primary btn-sm text-white" style="font-size:0.7rem;" href="/cancion/ver/{{_id}}">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+              <a class="btn btn-warning btn-sm text-white" style="font-size:0.7rem;" href="/cancion/editar/{{_id}}">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </a>
+              <a
+                role="button"
+                type="submit" 
+                class="btn btn-danger btn-sm text-white" 
+                style="font-size:0.7rem;"
+                onclick="document.querySelector('#lista-eliminar-cancion').submit();"
+              >
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
             </div>
-            <div id="acciones">
-            <a class="btn btn-primary btn-sm" style="font-size:0.7rem;" href="/cancion/ver/{{_id}}">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </a>
-            <a class="btn btn-warning btn-sm" style="font-size:0.7rem;" href="/cancion/editar/{{_id}}">
-              <i class="fa fa-edit" aria-hidden="true"></i>
-            </a>
-            <a
-              role="button"
-              type="submit" 
-              class="btn btn-danger btn-sm" 
-              style="font-size:0.7rem;"
-              onclick="document.querySelector('#lista-eliminar-cancion').submit();"
-            >
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
-    {{/each}} 
-  
+  {{/each}} 
 </div>
