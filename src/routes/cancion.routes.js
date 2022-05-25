@@ -39,8 +39,8 @@ router.post("/cancion/registrar", async (req, res, next) => {
                 errors.push({ text: validateCancion[error][0] });
             }
 
-            req.flash('msgdanger',"El formulario no está completo");
-            res.render("cancion/agregar", { errors });
+            req.flash('msgwarning',"Los datos del formulario son incorrectos.");
+            res.render("cancion/agregar", { errors, cancion });
             return;
         }
         
@@ -51,6 +51,7 @@ router.post("/cancion/registrar", async (req, res, next) => {
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
+        req.flash('msgdanger','Lo siento, se produjo un error.');
         res.redirect("/");
     }
 });
@@ -62,13 +63,14 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msgwarning','Lo siento, canción sin existencia.');
+            req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
         res.render("cancion/editar", { cancion: data});
     } catch (error) {
         next(error);
+        req.flash('msgdanger','Lo siento, se produjo un error.');
         res.redirect("/");
     }
 });
@@ -97,7 +99,7 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
         const data = await Cancion.findByIdAndUpdate(_id, cancion);
 
         if(!data){
-            req.flash('msgwarning','Lo siento, canción sin existencia.');
+            req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
             return;
         }
@@ -106,6 +108,7 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
+        req.flash('msgdanger','Lo siento, se produjo un error.');
         res.redirect("/");
     }
 });
@@ -117,13 +120,14 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msgwarning','Lo siento, canción sin existencia.');
+            req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
         res.render("cancion/ver", { cancion: data});
     } catch (error) {
         next(error);
+        req.flash('msgdanger','Lo siento, se produjo un error.');
         res.redirect("/");
     }
 });
@@ -135,7 +139,7 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         const data = await Cancion.findByIdAndRemove(_id);
 
         if(!data){
-            req.flash('msgwarning','Lo siento, canción sin existencia.');
+            req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
@@ -143,6 +147,7 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         res.redirect("/cancion/lista");
     } catch (error) {
         next(error);
+        req.flash('msgdanger','Lo siento, se produjo un error.');
         res.redirect("/");
     }
 });
