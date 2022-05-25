@@ -1,6 +1,7 @@
 const express = require('express');
 const Cancion = require("../models/Cancion");
 const router = express.Router();
+const CancionConstraints = require('../models/CancionConstraints');
 const validate = require("validate.js");
 
 // * Listar canciones
@@ -27,60 +28,20 @@ router.get("/cancion/agregar", (req, res) => {
 router.post("/cancion/registrar", async (req, res, next) => {
     try {
         const { titulo, grupo, anho, genero } = req.body;   
-        const cancion =  { titulo, grupo, anho, genero };
-        
-        const validacion = {
-            titulo: { 
-              type: 'string', 
-              presence: {message: 'está vacío.'}, 
-              length: {
-                minimum: 20,
-                maximum: 3,
-                tooShort: "Necesita tener %{count} letras más o menos.",
-                tokenizer: function(value) {
-                  return value.split(/\s+/g);
-                }
-              }
-            },
-            grupo: { 
-                type: 'string', 
-                presence: {message: 'está vacío.'}, 
-                length: {
-                  minimum: 20,
-                  maximum: 3,
-                  tooShort: "Necesita tener %{count} letras más o menos.",
-                  tokenizer: function(value) {
-                    return value.split(/\s+/g);
-                  }
-                }
-              },
-              genero: { 
-                type: 'string', 
-                presence: {message: 'está vacío.'}, 
-                length: {
-                  minimum: 20,
-                  maximum: 3,
-                  tooShort: "Necesita tener %{count} letras más o menos.",
-                  tokenizer: function(value) {
-                    return value.split(/\s+/g);
-                  }
-                }
-              },
-            anho: {
-              type: 'number',
-              presence: {message: 'está vacío.'},
-              numericality: {
-                onlyInteger: true
-              }
-            }
-          };
-        const respt = await validate(cancion, validacion);
-        console.log(respt);
+        const cancion =  { titulo, grupo, anho: parseInt(anho), genero };
+        const validateCancion = await validate(cancion, CancionConstraints);
 
-        if(respt){
-            console.log("Errors del formulario");
-            req.flash('msgdanger','Lo siento, el formulario está mal.');
-            res.redirect("/cancion/agregar");
+        if(validateCancion){
+            let errors = [];
+            
+            // * Obtener los errores
+            for(const error in validateCancion){
+                errors.push({ text: validateCancion[error][0] });
+            }
+
+            req.flash('msgdanger',"El formulario no está completo");
+            res.render("cancion/agregar", { errors });
+            return;
         }
         
         const nuevo = new Cancion(cancion);
@@ -117,12 +78,28 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
     try {
         const {_id} = req.params;
         const { titulo, grupo, anho, genero } = req.body;
-        const cancion =  { titulo, grupo, anho, genero };
+        const cancion =  { titulo, grupo, anho: parseInt(anho), genero };
+        const validateCancion = await validate(cancion, CancionConstraints);
+
+        if(validateCancion){
+            let errors = [];
+            
+            // * Obtener los errores
+            for(const error in validateCancion){
+                errors.push({ text: validateCancion[error][0] });
+            }
+
+            req.flash('msginfo',"Falló al actualizar la canción");
+            res.redirect(`/cancion/editar/${_id}`);
+            return;
+        }
+
         const data = await Cancion.findByIdAndUpdate(_id, cancion);
 
         if(!data){
             req.flash('msginfo','Lo siento, canción sin existencia.');
             res.redirect("/");
+            return;
         }
 
         req.flash('msgsuccess','La canción se actualizo exitosamente.');
