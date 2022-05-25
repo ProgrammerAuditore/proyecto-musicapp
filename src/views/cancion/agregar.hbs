@@ -8,17 +8,7 @@
 
 <div class="card m-4">
     <div class="card-header">
-      <ul class="nav nav-pills card-header-pills">
-        {{!-- <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> --}}
-      </ul>
+      <ul class="nav nav-pills card-header-pills"></ul>
     </div>
     <div class="card-body">
       <form action="/cancion/registrar" method="POST">
@@ -29,6 +19,7 @@
           class="form-control"
           placeholder="Ej. Sigo Aqui" 
           autocomplete="off"
+          value="{{cancion.titulo}}"
           name="titulo" 
           id="titulo" 
           required
@@ -42,6 +33,7 @@
           class="form-control"
           placeholder="Ej. Alex Ubago" 
           autocomplete="off"
+          value="{{cancion.grupo}}"
           name="grupo" 
           id="grupo"
           required 
@@ -55,6 +47,7 @@
           class="form-control"
           placeholder="Ej. Pop" 
           autocomplete="off"
+          value="{{cancion.genero}}"
           name="genero" 
           id="genero" 
           required
@@ -68,6 +61,7 @@
           class="form-control"
           placeholder="Ej. 2002" 
           autocomplete="off"
+          value="{{cancion.anho}}"
           name="anho" 
           id="anho" 
           required

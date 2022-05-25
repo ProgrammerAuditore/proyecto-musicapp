@@ -1,8 +1,8 @@
 {{#if errors}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <ul>
+    <ul class="list-group list-unstyled">
         {{#each errors}}
-        <li>{{ text }}</li>
+        <li class="list-group-item list-group-item-danger border-0 border-bottom">{{ text }}</li>
         {{/each}}
     </ul>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
