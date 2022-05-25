@@ -65,6 +65,7 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         if(!data){
             req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
+            return;
         }
 
         res.render("cancion/editar", { cancion: data});
@@ -122,6 +123,7 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         if(!data){
             req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
+            return;
         }
 
         res.render("cancion/ver", { cancion: data});
@@ -141,6 +143,7 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         if(!data){
             req.flash('msgdanger','Lo siento, canción sin existencia.');
             res.redirect("/");
+            return;
         }
 
         req.flash('msgsuccess','La canción se elimino exitosamente.');
