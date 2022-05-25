@@ -1,6 +1,8 @@
 const express = require('express');
 const Cancion = require("../models/Cancion");
 const router = express.Router();
+const CancionConstraints = require('../models/CancionConstraints');
+const validate = require("validate.js");
 
 // * Listar canciones
 router.get("/cancion/lista", async (req, res) => {
@@ -26,7 +28,22 @@ router.get("/cancion/agregar", (req, res) => {
 router.post("/cancion/registrar", async (req, res, next) => {
     try {
         const { titulo, grupo, anho, genero } = req.body;   
-        const cancion =  { titulo, grupo, anho, genero }; 
+        const cancion =  { titulo, grupo, anho: parseInt(anho), genero };
+        const validateCancion = await validate(cancion, CancionConstraints);
+
+        if(validateCancion){
+            let errors = [];
+            
+            // * Obtener los errores
+            for(const error in validateCancion){
+                errors.push({ text: validateCancion[error][0] });
+            }
+
+            req.flash('msgdanger',"El formulario no está completo");
+            res.render("cancion/agregar", { errors });
+            return;
+        }
+        
         const nuevo = new Cancion(cancion);
         await nuevo.save();
 
@@ -45,7 +62,7 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
@@ -61,12 +78,28 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
     try {
         const {_id} = req.params;
         const { titulo, grupo, anho, genero } = req.body;
-        const cancion =  { titulo, grupo, anho, genero };
+        const cancion =  { titulo, grupo, anho: parseInt(anho), genero };
+        const validateCancion = await validate(cancion, CancionConstraints);
+
+        if(validateCancion){
+            let errors = [];
+            
+            // * Obtener los errores
+            for(const error in validateCancion){
+                errors.push({ text: validateCancion[error][0] });
+            }
+
+            req.flash('msgwarning',"Falló al actualizar la canción");
+            res.redirect(`/cancion/editar/${_id}`);
+            return;
+        }
+
         const data = await Cancion.findByIdAndUpdate(_id, cancion);
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
+            return;
         }
 
         req.flash('msgsuccess','La canción se actualizo exitosamente.');
@@ -84,7 +117,7 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
@@ -102,7 +135,7 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         const data = await Cancion.findByIdAndRemove(_id);
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
