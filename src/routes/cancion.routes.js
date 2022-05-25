@@ -1,6 +1,7 @@
 const express = require('express');
 const Cancion = require("../models/Cancion");
 const router = express.Router();
+const validate = require("validate.js");
 
 // * Listar canciones
 router.get("/cancion/lista", async (req, res) => {
@@ -26,7 +27,62 @@ router.get("/cancion/agregar", (req, res) => {
 router.post("/cancion/registrar", async (req, res, next) => {
     try {
         const { titulo, grupo, anho, genero } = req.body;   
-        const cancion =  { titulo, grupo, anho, genero }; 
+        const cancion =  { titulo, grupo, anho, genero };
+        
+        const validacion = {
+            titulo: { 
+              type: 'string', 
+              presence: {message: 'está vacío.'}, 
+              length: {
+                minimum: 20,
+                maximum: 3,
+                tooShort: "Necesita tener %{count} letras más o menos.",
+                tokenizer: function(value) {
+                  return value.split(/\s+/g);
+                }
+              }
+            },
+            grupo: { 
+                type: 'string', 
+                presence: {message: 'está vacío.'}, 
+                length: {
+                  minimum: 20,
+                  maximum: 3,
+                  tooShort: "Necesita tener %{count} letras más o menos.",
+                  tokenizer: function(value) {
+                    return value.split(/\s+/g);
+                  }
+                }
+              },
+              genero: { 
+                type: 'string', 
+                presence: {message: 'está vacío.'}, 
+                length: {
+                  minimum: 20,
+                  maximum: 3,
+                  tooShort: "Necesita tener %{count} letras más o menos.",
+                  tokenizer: function(value) {
+                    return value.split(/\s+/g);
+                  }
+                }
+              },
+            anho: {
+              type: 'number',
+              presence: {message: 'está vacío.'},
+              numericality: {
+                onlyInteger: true
+              }
+            }
+          };
+        const respt = await validate(cancion, validacion);
+        console.log(respt);
+
+        if(respt){
+            console.log("Errors del formulario");
+            req.flash('msgdanger','Lo siento, el formulario está mal.');
+            res.redirect("/cancion/agregar");
+        }
+        
         const nuevo = new Cancion(cancion);
         await nuevo.save();
 
