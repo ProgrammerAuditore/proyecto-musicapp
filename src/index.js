@@ -44,7 +44,7 @@ app.use(session({
 app.use(flash());
 app.use(function(req, res, next){
     res.locals.msgsuccess = req.flash('msgsuccess');
-    res.locals.msginfo = req.flash('msginfo');
+    res.locals.msgwarning = req.flash('msgwarning');
     res.locals.msgdanger = req.flash('msgdanger');
     next();
    });

@@ -62,7 +62,7 @@ router.get("/cancion/editar/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
@@ -89,7 +89,7 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
                 errors.push({ text: validateCancion[error][0] });
             }
 
-            req.flash('msginfo',"Falló al actualizar la canción");
+            req.flash('msgwarning',"Falló al actualizar la canción");
             res.redirect(`/cancion/editar/${_id}`);
             return;
         }
@@ -97,7 +97,7 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
         const data = await Cancion.findByIdAndUpdate(_id, cancion);
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
             return;
         }
@@ -117,7 +117,7 @@ router.get("/cancion/ver/:_id", async (req, res, next) => {
         const data = await Cancion.findById(_id).lean();
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
@@ -135,7 +135,7 @@ router.delete("/cancion/eliminar/:_id", async (req, res, next) => {
         const data = await Cancion.findByIdAndRemove(_id);
 
         if(!data){
-            req.flash('msginfo','Lo siento, canción sin existencia.');
+            req.flash('msgwarning','Lo siento, canción sin existencia.');
             res.redirect("/");
         }
 
