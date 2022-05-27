@@ -85,14 +85,18 @@ router.put("/cancion/actualizar/:_id", async (req, res, next) => {
         const validateCancion = await validate(cancion, CancionConstraints);
 
         if(validateCancion){
-            let errors = [];
+            //let errores = "";
+            //let errors = [];
+            //cancion._id  = _id;
             
             // * Obtener los errores
             for(const error in validateCancion){
-                errors.push({ text: validateCancion[error][0] });
+                //errors.push({ text: validateCancion[error][0] });
+                //errores += `*> ${validateCancion[error][0]}`;
+                req.flash('msgwarning', "* " + validateCancion[error][0]);
             }
 
-            req.flash('msgwarning',"Falló al actualizar la canción");
+            //res.render(`cancion/editar`,{ cancion, errors});
             res.redirect(`/cancion/editar/${_id}`);
             return;
         }
