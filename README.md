@@ -1,5 +1,5 @@
 # MUSICAPP
-Este proyecto fue desarrollado con NodeJS + Express + MongoDB : [ver proyecto](https://app-musicapp.herokuapp.com)
+Este proyecto fue desarrollado con NodeJS + Express + MongoDB 
 
 # Requisitos funcionales
 Para hacer funcionar la aplicación se requiere tener instalado, como requisito lo siguiente:
@@ -18,24 +18,96 @@ Finalmente las variables de entorno son:
 *  **APP_DB_USER** *(Requerido)*  
 *  **APP_DB_PASSWORD** *(Requerido)* 
 *  **APP_DB_DATABASE** *(Requerido)*
-*  **APP_DB_URI** *(Opcional)* <br/> Solo en caso de requerir usuario y contraseña, por ejemplo: `mongodb://<user>:<password>@<host>:<port>/<database>?<options>`. Este variable de entorno anula los anteriores.
+*  **APP_DB_URI** *(Opcional)* <br/> Solo en caso de requerir usuario y contraseña, por ejemplo: `mongodb://<user>:<password>@<host>:<port>/<database>?<options>`. Este variable de entorno anula los anteriores. <br>
+El URI por defecto es mongodb://user_vagrant:pass@service_db/db_vagrant?authSource=admin
 
 ## Correr aplicación de forma independiente (Usando npm)
 #### Configuración previa
 Antes de ejecutar la aplicación es necesario configurar el archivo `.env` en la ruta **./** (raíz), la configuración necesario es la siguiente:
+
 ```text
 # MusicApp
-APP_PORT=<port>
+APP_PORT=3015 # Puerto para Music App
 
-# Database MongoDB Atlas
+# Database para Servidor de MongoDB Atlas
 APP_DB_USER="<user>"
 APP_DB_PASSWORD="<password>"
 APP_DB_DATABASE="<database>"
-#APP_DB_URI="<uri (es opcional)>"
+
+# Database para Servidor Local
+APP_DB_URI="mongodb://user_musicapp:pass@service_db/db_musicapp?authSource=admin"  # Opcional
 ```
 
 #### Iniciar la aplicación
 Es necesario ejecutar el comando  dentro del path para iniciar la aplicación **./** (raíz)
 ```shell
     npm run start
+```
+## Correr aplicación de forma automatizada (Usando docker-compose)
+Es necesario ejecutar el siguiente comando desde donde se encuetra el archivo **docker-compose.yml** 
+
+#### Configuración previa
+Antes de ejecutar los proyectos es necesario configurar el archivo `.env` en la ruta **./musicapp*, la configuración necesario es la siguiente:
+
+```text
+# MusicApp
+APP_PORT=3015 # Puerto para Music App
+
+# Database para Servidor de MongoDB Atlas
+APP_DB_USER="<user>"
+APP_DB_PASSWORD="<password>"
+APP_DB_DATABASE="<database>"
+
+# Database para Servidor Local
+APP_DB_URI="mongodb://user_musicapp:pass@service_db/db_musicapp?authSource=admin"  # Opcional
+```
+
+##### Esto construye y corre la aplicación en segundo plano
+```shell
+   docker-compose build && docker-compose up -d
+```
+
+##### Esto detiene y elimina la aplicación
+```shell
+   docker-compose stop -f && docker-compose rm -f
+```
+
+## Correr aplicación de forma automatizada (Usando vagrant)
+#### **Nota**
+Es necesario ejecutar el siguiente comando desde la directorio/carpeta raíz donde se encuetra el archivo **docker-compose.yml** 
+
+Cabe mencionar que el archivo **docker-compose.yml** es creado y configurado especificamente para ejecutarse dentro de vagrant.
+Así tambien el comando "vagrant up" o "vagrant reload", levanta los servicios definidas en el archivo **docker-compose.yml** (Por defecto).
+
+#### Configuración previa
+Antes de ejecutar los proyectos es necesario configurar el archivo `.env` en la ruta **./musicapp*, la configuración necesario es la siguiente:
+
+```text
+# MusicApp
+APP_PORT=3015 # Puerto para Music App
+
+# Database para Servidor de MongoDB Atlas
+APP_DB_USER="<user>"
+APP_DB_PASSWORD="<password>"
+APP_DB_DATABASE="<database>"
+
+# Database para Servidor Local
+APP_DB_URI="mongodb://user_musicapp:pass@service_db/db_musicapp?authSource=admin"  # Opcional
+```
+
+##### Crear maquina virtual
+Este comando crea una maquina virtual usando **'vagrant'** para correr *docker* y *docker-compose* dentro de ella. <br>
+Por tal motivo, este comando se debe ejecutar una sola vez. 
+```shell
+   vagrant up 
+```
+
+##### Construir y levantar el proyecto
+Este comando reinicia la maquina virtual usando **'vagrant'**, asi también ejecuta la provision *run-workspace* definida en el archivo *Vagrantfile*. <br>
++ *run-workspace* : Suspende, Elimina, Contruye y Levanta los servicios de *__docker-compose__* en el mismo orden. <br>
+
+Por tal motivo, este comando se puede ejecutar las veces que sean necesarias. 
+
+```shell
+   vagrant reload 
 ```
