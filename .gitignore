@@ -1,0 +1,4 @@
+.vagrant/
+*.vagrant*
+musicapp/node_modules
+musicapp/.env
