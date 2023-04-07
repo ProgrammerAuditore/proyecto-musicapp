@@ -21,14 +21,16 @@ Para hacer funcionar la aplicación se requiere tener instalado, como requisito 
 
 # Configuración Backend
 Es necesario crear un archivo `.env` del proyecto de backend dentro del path **/**(raíz), opcionalmente puede hacer una copia del archivo `.env.example` con el nombre de **.env** que incluyen variables de entorno <br> 
-Finalmente las variables de entorno son: 
-### Variables de entorno para API | mascota
-*  **APP_PORT** *(Requerido)* Puerto para la aplicación por defecto es `3000`
 
-### Variables de entorno para Mongo | base de datos
+### Variables de entorno para proyecto | Musicapp
+*  **APP_PORT** *(Requerido)* Puerto para la aplicación por defecto es `3015`
+
+### Variables de entorno para base de datos | MongoDB Atlas
 *  **APP_DB_USER** *(Requerido)*  
 *  **APP_DB_PASSWORD** *(Requerido)* 
 *  **APP_DB_DATABASE** *(Requerido)*
+
+### Variables de entorno para base de datos | Otros
 *  **APP_DB_URI** *(Opcional)* <br/> Solo en caso de requerir usuario y contraseña, por ejemplo: `mongodb://<user>:<password>@<host>:<port>/<database>?<options>`. Este variable de entorno anula los anteriores. <br>
 El URI por defecto es mongodb://user_vagrant:pass@service_db/db_vagrant?authSource=admin
 
