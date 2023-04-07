@@ -1,13 +1,24 @@
 # MUSICAPP
 Este proyecto fue desarrollado con NodeJS + Express + MongoDB 
 
+# Screenshot
+
+![Preview 00](/screenshot/preview_00.jpg)
+
+![Preview 01](/screenshot/preview_01.jpg)
+
 # Requisitos funcionales
 Para hacer funcionar la aplicación se requiere tener instalado, como requisito lo siguiente:
-* NodeJS +14.x.x (o superior)
-* npm
-* MongoDB (local o remoto)
-* Browser (Google Chrome, Firefox, etc.)
- 
+* Requisitos minimos
+  * NodeJS +14.x.x (o superior)
+  * npm
+  * Browser (Google Chrome, Firefox, etc.)
+* Requisitos adicionales
+  * docker
+  * docker-compose
+  * vagrant
+  * MongoDB
+
 # Configuración Backend
 Es necesario crear un archivo `.env` del proyecto de backend dentro del path **/**(raíz), opcionalmente puede hacer una copia del archivo `.env.example` con el nombre de **.env** que incluyen variables de entorno <br> 
 Finalmente las variables de entorno son: 
