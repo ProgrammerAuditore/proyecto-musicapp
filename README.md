@@ -23,7 +23,7 @@ Para hacer funcionar la aplicación se requiere tener instalado, como requisito 
 Es necesario crear un archivo `.env` del proyecto de backend dentro del path **/**(raíz), opcionalmente puede hacer una copia del archivo `.env.example` con el nombre de **.env** que incluyen variables de entorno <br> 
 Finalmente las variables de entorno son: 
 ### Variables de entorno para API | mascota
-*  **APP_PORT** *(Requerido)* Puerto para la aplicación por defecto es `3000`
+*  **APP_PORT** *(Requerido)* Puerto para la aplicación por defecto es `3015`
 
 ### Variables de entorno para Mongo | base de datos
 *  **APP_DB_USER** *(Requerido)*  
