@@ -1,0 +1,3 @@
+.vagrant/
+.git/
+musicapp/node_modules

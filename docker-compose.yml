@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  # Base de datos mongoDB
+  service_db:
+    image: mongo:4.0
+    container_name: db-mongodb
+    networks:
+      - my-network
+    ports:
+      - "27057:27017"
+    #command: mongod --dbpath /data/db --repair
+    #command: mongod --port 27080 --dbpath /data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - /home/vagrant/data:/data/db
+      # create-user.js ; Se ejecutará solo si la carpeta /data/db
+      # no contenga contenido de MongoDB (es decir, si no se ha inicializado MongoDB) 
+      - /home/vagrant/workspace/data/create-user.js:/docker-entrypoint-initdb.d/create-user.js:ro
+    #command: mongod --dbpath /data/db --repair
+    #command: mongod --port 27017 --dbpath /data/db
+    command: mongod --bind_ip_all --auth
+    
+  # Proyecto de NodeJS + Express + MongoDB
+  service_app:
+    container_name: react-music-app
+    networks:
+      - my-network
+    restart: always
+    build: 
+        context: ./musicapp
+        dockerfile: musicapp.Dockerfile
+    volumes:
+      - /home/max98/workspace/musicapp
+      - /home/max98/workspace/musicapp/node_modules
+    ports:
+      - "3015:3015"
+    environment:
+      APP_PORT: 3015
+      APP_DB_URI: "mongodb://user_musicapp:pass@service_db/db_musicapp?authSource=admin"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3015"]
+      interval: 30s 
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - service_db
+    links:
+      - service_db
+    command: npm start
+
+networks:
+  my-network:
+    driver: bridge
