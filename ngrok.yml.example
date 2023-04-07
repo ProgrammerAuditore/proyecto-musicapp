@@ -1,0 +1,5 @@
+authtoken: <your_ngrok_auth_token>
+tunnels:
+  my-tunnel:
+    proto: http
+    addr: service_app:3015

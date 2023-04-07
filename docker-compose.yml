@@ -52,6 +52,22 @@ services:
       - service_db
     command: npm start
 
+  ngrok:
+    image: wernight/ngrok
+    networks:
+      - my-network
+    volumes:
+      - /home/vagrant/workspace/ngrok.yml:/home/ngrok/ngrok.yml
+    ports:
+      - "4040:4040"
+    environment: 
+      APP_URL: "service_app:3015"
+    depends_on:
+      - service_app
+    links:
+      - service_app
+    command: ngrok start --config=/home/ngrok/ngrok.yml --all
+
 networks:
   my-network:
     driver: bridge

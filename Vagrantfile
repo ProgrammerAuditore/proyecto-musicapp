@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
     # Exponer el puerto interior de la caja ** Para MongoDB  **
     config.vm.network "forwarded_port", guest: 27057 , host: 27057, auto_correct: true
 
+    # Exponer el puerto interior de la caja ** Para Ngrok **
+    config.vm.network "forwarded_port", guest: 4040 , host: 4040, auto_correct: true
+
     # Actualizar repositorio la caja de Ubuntu 18.04LTS
     config.vm.provision "shell", inline: "sudo apt-get update -qq -y"
     

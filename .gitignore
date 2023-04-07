@@ -2,3 +2,4 @@
 *.vagrant*
 musicapp/node_modules
 musicapp/.env
+ngrok.yml
