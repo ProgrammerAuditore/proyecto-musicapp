@@ -59,6 +59,12 @@ app.use(function(req, res, next){
 });
 
 // * Aplicación
-app.listen(app.get('port'), 
-() => console.log('Server on ', app.get('port')));
+const server = app.listen(app.get('port'), () => {
+    const { address, port } = server.address();
+    const ip = address === '::' ? 'localhost' : address;
+    const protocol = 'http';
+    const url = `${protocol}://${ip}:${port}`;
+
+    console.log(`Servidor corriendo en ${url}`);
+});
 
