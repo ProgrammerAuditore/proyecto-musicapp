@@ -60,8 +60,6 @@ services:
       - /home/vagrant/workspace/ngrok.yml:/home/ngrok/ngrok.yml
     ports:
       - "4040:4040"
-    environment: 
-      APP_URL: "service_app:3015"
     depends_on:
       - service_app
     links:
